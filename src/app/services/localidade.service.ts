@@ -12,13 +12,14 @@ export class LocalidadeService {
 
   constructor(private http: HttpClient) { }
 
+  // Método para obter a lista de estados
   getEstados(): Observable<any> {
-    // Obter todos os estados
     return this.http.get<any>(this.estadosUrl);
   }
 
+  // Método para obter a lista de municípios com base no ID do estado
   getMunicipios(estadoId: string): Observable<any> {
-    // Obter todos os municípios de um estado
     return this.http.get<any>(this.municipiosUrl(estadoId));
   }
 }
+

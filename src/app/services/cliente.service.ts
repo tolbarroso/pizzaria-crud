@@ -1,26 +1,54 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Cliente } from '../models/cliente';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ClienteService } from '../../services/cliente.service';
+import { LocalidadeService } from '../../services/localidade.service';
 
-@Injectable({
-  providedIn: 'root'
+@Component({
+  selector: 'app-clientes',
+  templateUrl: './clientes.component.html',
+  styleUrls: ['./clientes.component.css']
 })
-export class ClienteService {
-  constructor(private firestore: AngularFirestore) {}
+export class ClientesComponent implements OnInit {
+  clienteForm: FormGroup;
+  estados: any[] = [];
+  municipios: any[] = [];
 
-  getClientes() {
-    return this.firestore.collection('clientes').snapshotChanges();
+  constructor(
+    private fb: FormBuilder,
+    private clienteService: ClienteService,
+    private localidadeService: LocalidadeService
+  ) {
+    this.clienteForm = this.fb.group({
+      nome: ['', Validators.required],
+      rua: ['', Validators.required],
+      bairro: ['', Validators.required],
+      numero: ['', Validators.required],
+      cidade: ['', Validators.required],
+      cep: ['', Validators.required],
+      estado: ['', Validators.required],
+      telefone: ['', Validators.required],
+      cpf: ['', Validators.required],
+      sexo: ['', Validators.required]
+    });
   }
 
-  createCliente(cliente: Cliente) {
-    return this.firestore.collection('clientes').add(cliente);
+  ngOnInit(): void {
+    this.localidadeService.getEstados().subscribe(data => {
+      this.estados = data;
+    });
+
+    this.clienteForm.get('estado')?.valueChanges.subscribe(estadoId => {
+      this.localidadeService.getMunicipios(estadoId).subscribe(data => {
+        this.municipios = data;
+      });
+    });
   }
 
-  updateCliente(cliente: Cliente) {
-    return this.firestore.doc('clientes/' + cliente.id).update(cliente);
-  }
-
-  deleteCliente(clienteId: string) {
-    return this.firestore.doc('clientes/' + clienteId).delete();
+  onSubmit() {
+    if (this.clienteForm.valid) {
+      this.clienteService.createCliente(this.clienteForm.value).then(() => {
+        console.log('Cliente criado com sucesso!');
+      });
+    }
   }
 }
