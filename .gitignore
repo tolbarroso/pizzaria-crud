@@ -1,0 +1,6 @@
+/node_modules
+/dist
+/.angular
+/src/environments/environment.prod.ts
+/src/environments/environment.ts
+/_logs

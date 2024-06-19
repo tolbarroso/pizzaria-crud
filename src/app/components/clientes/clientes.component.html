@@ -48,11 +48,4 @@
       <option value="Outro">Outro</option>
     </select>
   </div>
-  <button type="submit">Salvar</button>
-</form>
-
-<div *ngFor="let cliente of clientes">
-  <p>{{ cliente.nome }}</p>
-  <button (click)="updateCliente(cliente)">Editar</button>
-  <button (click)="deleteCliente(cliente.id)">Deletar</button>
-</div>
+  <button type="submit">Salvar
