@@ -1,0 +1,58 @@
+<h2>Clientes</h2>
+<form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="nome">Nome</label>
+    <input id="nome" formControlName="nome">
+  </div>
+  <div>
+    <label for="rua">Rua</label>
+    <input id="rua" formControlName="rua">
+  </div>
+  <div>
+    <label for="bairro">Bairro</label>
+    <input id="bairro" formControlName="bairro">
+  </div>
+  <div>
+    <label for="numero">Número</label>
+    <input id="numero" formControlName="numero" type="number">
+  </div>
+  <div>
+    <label for="estado">Estado</label>
+    <select id="estado" formControlName="estado" (change)="onEstadoChange($event.target.value)">
+      <option *ngFor="let estado of estados" [value]="estado.id">{{ estado.nome }}</option>
+    </select>
+  </div>
+  <div>
+    <label for="municipio">Município</label>
+    <select id="municipio" formControlName="cidade">
+      <option *ngFor="let municipio of municipios" [value]="municipio.nome">{{ municipio.nome }}</option>
+    </select>
+  </div>
+  <div>
+    <label for="cep">CEP</label>
+    <input id="cep" formControlName="cep">
+  </div>
+  <div>
+    <label for="telefone">Telefone</label>
+    <input id="telefone" formControlName="telefone">
+  </div>
+  <div>
+    <label for="cpf">CPF</label>
+    <input id="cpf" formControlName="cpf">
+  </div>
+  <div>
+    <label for="sexo">Sexo</label>
+    <select id="sexo" formControlName="sexo">
+      <option value="Masculino">Masculino</option>
+      <option value="Feminino">Feminino</option>
+      <option value="Outro">Outro</option>
+    </select>
+  </div>
+  <button type="submit">Salvar</button>
+</form>
+
+<div *ngFor="let cliente of clientes">
+  <p>{{ cliente.nome }}</p>
+  <button (click)="updateCliente(cliente)">Editar</button>
+  <button (click)="deleteCliente(cliente.id)">Deletar</button>
+</div>

@@ -1,0 +1,26 @@
+<h2>Produtos</h2>
+<form [formGroup]="produtoForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="nome">Nome</label>
+    <input id="nome" formControlName="nome">
+  </div>
+  <div>
+    <label for="preco">Preço</label>
+    <input id="preco" formControlName="preco" type="number">
+  </div>
+  <div>
+    <label for="categoria">Categoria</label>
+    <select id="categoria" formControlName="categoria">
+      <option value="Pizza">Pizza</option>
+      <option value="Bebida">Bebida</option>
+      <option value="Sobremesa">Sobremesa</option>
+    </select>
+  </div>
+  <button type="submit">Salvar</button>
+</form>
+
+<div *ngFor="let produto of produtos">
+  <p>{{ produto.nome }} - {{ produto.preco | currency }}</p>
+  <button (click)="updateProduto(produto)">Editar</button>
+  <button (click)="deleteProduto(produto.id)">Deletar</button>
+</div>

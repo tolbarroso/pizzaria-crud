@@ -1,0 +1,30 @@
+<h2>Pedidos</h2>
+<form [formGroup]="pedidoForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="cliente">Cliente</label>
+    <select id="cliente" formControlName="cliente">
+      <option *ngFor="let cliente of clientes" [value]="cliente">{{ cliente.nome }}</option>
+    </select>
+  </div>
+  <div>
+    <label for="itens">Itens</label>
+    <select multiple id="itens" formControlName="itens">
+      <option *ngFor="let produto of produtos" [value]="produto">{{ produto.nome }}</option>
+    </select>
+  </div>
+  <div>
+    <label for="total">Total</label>
+    <input id="total" formControlName="total" type="number" disabled>
+  </div>
+  <div>
+    <label for="dataPedido">Data do Pedido</label>
+    <input id="dataPedido" formControlName="dataPedido" type="date">
+  </div>
+  <button type="submit">Salvar</button>
+</form>
+
+<div *ngFor="let pedido of pedidos">
+  <p>{{ pedido.cliente.nome }} - {{ pedido.total | currency }}</p>
+  <button (click)="updatePedido(pedido)">Editar</button>
+  <button (click)="deletePedido(pedido.id)">Deletar</button>
+</div>
